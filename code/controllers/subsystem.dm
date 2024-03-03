@@ -152,15 +152,13 @@
 		if(SS_SLEEPING)
 			state = SS_PAUSING
 
-
-//used to initialize the subsystem AFTER the map has loaded
-/datum/controller/subsystem/Initialize(start_timeofday)
-	subsystem_initialized = TRUE
-	var/time = (REALTIMEOFDAY - start_timeofday) / 10
-	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
-	to_chat(world, "<span class='boldannounce'>[msg]</span>")
-	log_world(msg)
-	return time
+// CHOMPEdit Start
+/**
+ * Used to initialize the subsystem. This is expected to be overriden by subtypes.
+ */
+/datum/controller/subsystem/Initialize()
+	return SS_INIT_NONE
+// CHOMPEdit End
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/controller/subsystem/stat_entry(msg)
@@ -210,7 +208,7 @@
 	can_fire = FALSE
 	// Safely sleep in a loop until the subsystem is idle, (or its been un-suspended somehow)
 	while(can_fire <= 0 && state != SS_IDLE)
-		stoplag() // Safely sleep in a loop until 
+		stoplag() // Safely sleep in a loop until
 
 // Wakes a suspended subsystem.
 /datum/controller/subsystem/proc/wake()
