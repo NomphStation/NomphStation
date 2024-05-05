@@ -1153,7 +1153,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "HomphStation" // CHOMP Edit //HomphEdit
+		title = "CHOMPStation" // CHOMP Edit
 		is-maximized = true
 		statusbar = false
 		icon = 'icons/ss13_64.png' // CHOMP Edit
