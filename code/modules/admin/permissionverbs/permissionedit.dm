@@ -84,7 +84,7 @@
 		var/datum/db_query/insert_query = SSdbcore.NewQuery("INSERT INTO `erro_admin` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)") //CHOMPEdit TGSQL
 		insert_query.Execute()
 		qdel(insert_query) //CHOMPEdit TGSQL
-		var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');") //CHOMPEdit TGSQL
+		var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');") //CHOMPEdit TGSQL
 		log_query.Execute()
 		qdel(log_query) //CHOMPEdit TGSQL
 		to_chat(usr, "<span class='filter_adminlog'>[span_blue("New admin added.")]</span>")
@@ -93,7 +93,7 @@
 			var/datum/db_query/insert_query = SSdbcore.NewQuery("UPDATE `erro_admin` SET rank = '[new_rank]' WHERE id = [admin_id]") //CHOMPEdit TGSQL
 			insert_query.Execute()
 			qdel(insert_query) //CHOMPEdit TGSQL
-			var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');") //CHOMPEdit TGSQL
+			var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edited the rank of [adm_ckey] to [new_rank]');") //CHOMPEdit TGSQL
 			log_query.Execute()
 			qdel(log_query) //CHOMPEdit TGSQL
 			to_chat(usr, "<span class='filter_adminlog'>[span_blue("Admin rank changed.")]</span>")
@@ -143,7 +143,7 @@
 		var/datum/db_query/insert_query = SSdbcore.NewQuery("UPDATE `erro_admin` SET flags = [admin_rights & ~new_permission] WHERE id = [admin_id]") //CHOMPEdit TGSQL
 		insert_query.Execute()
 		qdel(insert_query) //CHOMPEdit TGSQL
-		var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');") //CHOMPEdit TGSQL
+		var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Removed permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');") //CHOMPEdit TGSQL
 		log_query.Execute()
 		qdel(log_query) //CHOMPEdit TGSQL
 		to_chat(usr, "<span class='filter_adminlog'>[span_blue("Permission removed.")]</span>")
@@ -151,7 +151,7 @@
 		var/datum/db_query/insert_query = SSdbcore.NewQuery("UPDATE `erro_admin` SET flags = '[admin_rights | new_permission]' WHERE id = [admin_id]") //CHOMPEdit TGSQL
 		insert_query.Execute()
 		qdel(insert_query) //CHOMPEdit TGSQL
-		var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `test`.`erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]')") //CHOMPEdit TGSQL
+		var/datum/db_query/log_query = SSdbcore.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]')") //CHOMPEdit TGSQL
 		log_query.Execute()
 		qdel(log_query) //CHOMPEdit TGSQL
 		to_chat(usr, "<span class='filter_adminlog'>[span_blue("Permission added.")]</span>")
