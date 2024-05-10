@@ -176,8 +176,8 @@
 
 /datum/job/proc/is_species_banned(species_name, brain_type)
 	// CHOMPEdit begin -- Shadekin cannot be any crew position
-	if(species_name == SPECIES_SHADEKIN)
-		return TRUE
+	/*if(species_name == SPECIES_SHADEKIN)
+		return TRUE*/ //HomphEdit allow shadkins, they're whitelisted anyway.
 	// CHOMPEdit end
 	return FALSE // VOREStation Edit - Any species can be any job.
 	/* VOREStation Removal
