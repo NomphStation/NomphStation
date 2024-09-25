@@ -179,7 +179,7 @@
 					rank = scan.assignment
 			else if(login_type == LOGIN_TYPE_AI && isAI(usr))
 				authenticated = usr.name
-				rank = "AI"
+				rank = JOB_AI
 			else if(login_type == LOGIN_TYPE_ROBOT && isrobot(usr))
 				authenticated = usr.name
 				var/mob/living/silicon/robot/R = usr
@@ -385,3 +385,9 @@
 			continue
 
 	..(severity)
+
+#undef GENERAL_RECORD_LIST
+#undef GENERAL_RECORD_MAINT
+#undef GENERAL_RECORD_DATA
+
+#undef FIELD

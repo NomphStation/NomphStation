@@ -6,21 +6,23 @@
 	name = "Clothing"
 	sort_order = 4
 
-/datum/category_item/player_setup_item/general/equipment/load_character(var/savefile/S)
-	S["all_underwear"] >> pref.all_underwear
-	S["all_underwear_metadata"] >> pref.all_underwear_metadata
-	S["backbag"]	>> pref.backbag
-	S["pdachoice"]	>> pref.pdachoice
-	S["communicator_visibility"]	>> pref.communicator_visibility
-	S["ttone"]	>> pref.ringtone // CHOMPEdit - We use ttone in the pref so that it doesnt get reset
+/datum/category_item/player_setup_item/general/equipment/load_character(list/save_data)
+	pref.all_underwear				= save_data["all_underwear"]
+	pref.all_underwear_metadata		= save_data["all_underwear_metadata"]
+	pref.backbag					= save_data["backbag"]
+	pref.pdachoice					= save_data["pdachoice"]
+	pref.communicator_visibility	= save_data["communicator_visibility"]
+	pref.ringtone					= save_data["ttone"] // CHOMPEdit - We use ttone in the pref so that it doesnt get reset
+	//pref.shoe_hater					= save_data["shoe_hater"] //CHOMPRemove, remove RS No shoes
 
-/datum/category_item/player_setup_item/general/equipment/save_character(var/savefile/S)
-	S["all_underwear"] << pref.all_underwear
-	S["all_underwear_metadata"] << pref.all_underwear_metadata
-	S["backbag"]	<< pref.backbag
-	S["pdachoice"]	<< pref.pdachoice
-	S["communicator_visibility"]	<< pref.communicator_visibility
-	S["ttone"]	<< pref.ringtone  // CHOMPEdit - We use ttone in the pref so that it doesnt get reset
+/datum/category_item/player_setup_item/general/equipment/save_character(list/save_data)
+	save_data["all_underwear"]				= pref.all_underwear
+	save_data["all_underwear_metadata"] 	= pref.all_underwear_metadata
+	save_data["backbag"]					= pref.backbag
+	save_data["pdachoice"]					= pref.pdachoice
+	save_data["communicator_visibility"]	= pref.communicator_visibility
+	save_data["ttone"]						= pref.ringtone // CHOMPEdit - We use ttone in the pref so that it doesnt get reset
+	//save_data["shoe_hater"] 				= pref.shoe_hater //CHOMPRemove, remove RS No shoes
 
 var/global/list/valid_ringtones = list(
 		"beep",
@@ -121,6 +123,7 @@ var/global/list/valid_ringtones = list(
 	. += "PDA Type: <a href='?src=\ref[src];change_pda=1'><b>[pdachoicelist[pref.pdachoice]]</b></a><br>"
 	. += "Communicator Visibility: <a href='?src=\ref[src];toggle_comm_visibility=1'><b>[(pref.communicator_visibility) ? "Yes" : "No"]</b></a><br>"
 	. += "Ringtone (leave blank for job default): <a href='?src=\ref[src];set_ringtone=1'><b>[pref.ringtone]</b></a><br>"
+	//. += "Spawn With Shoes:<a href='?src=\ref[src];toggle_shoes=1'><b>[(pref.shoe_hater) ? "No" : "Yes"]</b></a><br>" //RS Addition //CHOMPRemove, remove RS No shoes
 
 	return jointext(.,null)
 
@@ -189,5 +192,12 @@ var/global/list/valid_ringtones = list(
 		else
 			pref.ringtone = choice
 		return TOPIC_REFRESH
+	/*CHOMPRemove Start,  remove RS No shoes
+	else if(href_list["toggle_shoes"])	//RS ADD START
+		if(CanUseTopic(user))
+			pref.shoe_hater = !pref.shoe_hater
+			return TOPIC_REFRESH
+			//RS ADD END
+	*///CHOMPRemove End, remove RS No shoes
 
 	return ..()

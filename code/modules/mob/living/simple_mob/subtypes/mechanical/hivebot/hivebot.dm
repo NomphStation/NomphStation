@@ -1,7 +1,3 @@
-// Hivebots are tuned towards how many default lasers are needed to kill them.
-// As such, if laser damage is ever changed, you should change this define.
-#define LASERS_TO_KILL * 15 //chompedit: Reduce health of hivebots by reducing 40 to 15
-
 /mob/living/simple_mob/mechanical/hivebot
 	name = "hivebot"
 	desc = "A robot. It appears to be somewhat resilient, but lacks a true weapon."
@@ -9,7 +5,7 @@
 	icon_state = "basic"
 	icon_living = "basic"
 
-	faction = "hivebot"
+	faction = FACTION_HIVEBOT
 
 	maxHealth = 3 LASERS_TO_KILL
 	health = 3 LASERS_TO_KILL

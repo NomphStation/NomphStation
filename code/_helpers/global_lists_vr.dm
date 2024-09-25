@@ -219,6 +219,7 @@ var/global/list/edible_trash = list(/obj/item/broken_device,
 				/obj/item/trash,
 				/obj/item/weapon/digestion_remains,
 				/obj/item/weapon/bananapeel,
+				/obj/item/weapon/book,
 				/obj/item/weapon/bone,
 				/obj/item/weapon/broken_bottle,
 				/obj/item/weapon/card/emag_broken,
@@ -275,7 +276,7 @@ var/global/list/edible_trash = list(/obj/item/broken_device,
 				/obj/item/weapon/clipboard,
 				/obj/item/weapon/coin,
 				/obj/item/clothing/ears, //chompstation addition end
-				//CHOMPedit: disabled because this is in a file we don't use /obj/item/roulette_ball
+				/obj/item/roulette_ball,
 				/obj/item/pizzabox
 				)
 
@@ -545,16 +546,16 @@ var/global/list/remainless_species = list(SPECIES_PROMETHEAN,
 				SPECIES_SHADEKIN)			//Shadefluffers just poof away
 
 /var/global/list/alt_titles_with_icons = list(
-				"Virologist",
-				"Apprentice Engineer",
-				"Medical Intern",
-				"Research Intern",
-				"Security Cadet",
-				"Jr. Cargo Tech",
-				"Jr. Explorer", //CHOMP explo keep
-				"Server",
-				"Electrician",
-				"Barista")
+				JOB_ALT_VIROLOGIST,
+				JOB_ALT_APPRENTICE_ENGINEER,
+				JOB_ALT_MEDICAL_INTERN,
+				JOB_ALT_RESEARCH_INTERN,
+				JOB_ALT_SECURITY_CADET,
+				JOB_ALT_JR_CARGO_TECH,
+				JOB_ALT_JR_EXPLORER, //CHOMP explo keep
+				JOB_ALT_SERVER,
+				JOB_ALT_ELECTRICIAN,
+				JOB_ALT_BARISTA)
 
 /var/global/list/existing_solargrubs = list()
 

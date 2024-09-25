@@ -351,6 +351,11 @@
 /obj/effect/landmark/map_data/jungle
 	height = 2
 
+/datum/map_template/common_lateload/redgate/facility
+	name = "Redgate - Facility"
+	desc = "A facility full of unusual experiments."
+	mappath = 'maps/redgate/facility.dmm'
+
 //////////////////////////////////////////////////////////////////////////////////////
 // Admin-use z-levels for loading whenever an admin feels like
 #if AWAY_MISSION_TEST
@@ -525,7 +530,7 @@
 	icon = 'icons/mob/vore_shadekin.dmi'
 	icon_state = "spawner"
 
-	faction = "shadekin"
+	faction = FACTION_SHADEKIN
 	prob_spawn = 1
 	prob_fall = 1
 	//guard = 10 //Don't wander too far, to stay alive.
@@ -589,7 +594,7 @@
 #include "../offmap_vr/om_ships/aro2.dm"
 #include "../offmap_vr/om_ships/aro3.dm"
 #include "../offmap_vr/om_ships/bearcat.dm"
-#include "../offmap_vr/om_ships/cruiser.dm"
+#include "../offmap_vr/om_ships/cruiser.dm" //CHOMPKeep
 #include "../offmap_vr/om_ships/vespa.dm"
 #include "../offmap_vr/om_ships/generic_shuttle.dm"
 #include "../offmap_vr/om_ships/salamander.dm"
@@ -606,7 +611,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //Capsule deployed ships
 #include "../offmap_vr/om_ships/shelter_5.dm"
-#include "../offmap_vr/om_ships/shelter_6.dm"
+#include "../offmap_vr/om_ships/shelter_6.dm" //CHOMPKeep
 
 //////////////////////////////////////////////////////////////////////////////
 //Offmap Spawn Locations

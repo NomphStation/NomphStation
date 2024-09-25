@@ -236,7 +236,7 @@
 					rank = scan.assignment
 			else if(login_type == LOGIN_TYPE_AI && isAI(usr))
 				authenticated = usr.name
-				rank = "AI"
+				rank = JOB_AI
 			else if(login_type == LOGIN_TYPE_ROBOT && isrobot(usr))
 				authenticated = usr.name
 				var/mob/living/silicon/robot/R = usr
@@ -509,6 +509,12 @@
 	light_color = "#5284e7"
 	circuit = /obj/item/weapon/circuitboard/med_data/pcu
 	density = FALSE
+
+#undef MED_DATA_R_LIST
+#undef MED_DATA_MAINT
+#undef MED_DATA_RECORD
+#undef MED_DATA_V_DATA
+#undef MED_DATA_MEDBOT
 
 #undef FIELD
 #undef MED_FIELD

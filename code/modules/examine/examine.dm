@@ -5,7 +5,7 @@
 	This means that this file can be unchecked, along with the other examine files, and can be removed entirely with no effort.
 */
 
-// #define EXAMINE_PANEL_PADDING "               " //CHOMPRemove
+// # define EXAMINE_PANEL_PADDING "               " //CHOMPRemove
 
 /atom/
 	var/description_info = null //Helpful blue text.
@@ -115,7 +115,10 @@
 	var/list/results = A.examine(src)
 	if(!results || !results.len)
 		results = list("You were unable to examine that. Tell a developer!")
-	to_chat(src, "<span class='infoplain'>[jointext(results, "<br>")]</span>")
+	var/final_string = "<span class='infoplain'>[jointext(results, "<br>")]</span>"
+	if(ismob(A)) // mob descriptions matter more than others
+		final_string = examine_block(final_string)
+	to_chat(src, final_string)
 	update_examine_panel(A)
 
 /mob/proc/update_examine_panel(var/atom/A)
@@ -198,3 +201,5 @@
 		results = list("You were unable to examine that. Tell a developer!")
 	to_chat(src, jointext(results, "<br>"))
 	update_examine_panel(B)
+
+// # undef EXAMINE_PANEL_PADDING //CHOMPRemove

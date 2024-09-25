@@ -221,7 +221,7 @@
 					rank = scan.assignment
 			else if(login_type == LOGIN_TYPE_AI && isAI(usr))
 				authenticated = usr.name
-				rank = "AI"
+				rank = JOB_AI
 			else if(login_type == LOGIN_TYPE_ROBOT && isrobot(usr))
 				authenticated = usr.name
 				var/mob/living/silicon/robot/R = usr
@@ -511,5 +511,9 @@
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon_state = "messyfiles"
+
+#undef SEC_DATA_R_LIST
+#undef SEC_DATA_MAINT
+#undef SEC_DATA_RECORD
 
 #undef FIELD

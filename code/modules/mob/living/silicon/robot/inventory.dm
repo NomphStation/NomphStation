@@ -255,9 +255,14 @@
 	else
 		to_chat(src, "<span class='notice'>You need to disable a module first!</span>")
 		return
-	after_equip()
+	after_equip(O)
 
-/mob/living/silicon/robot/proc/after_equip()
+/mob/living/silicon/robot/proc/after_equip(var/obj/item/O)
+	if(istype(O, /obj/item/device/gps))
+		var/obj/item/device/gps/tracker = O
+		if(tracker.tracking)
+			tracker.tracking = FALSE
+			tracker.toggle_tracking()
 	/* //ChompEDIT START - remove bluespace pounce
 	if(sight_mode & BORGANOMALOUS)
 		var/obj/item/weapon/dogborg/pounce/pounce = has_upgrade_module(/obj/item/weapon/dogborg/pounce)
@@ -275,7 +280,7 @@
 	*/ //ChompEDIT END
 
 /mob/living/silicon/robot/put_in_hands(var/obj/item/W) // No hands.
-	W.loc = get_turf(src)
+	W.forceMove(get_turf(src))
 	return 1
 
 /mob/living/silicon/robot/is_holding_item_of_type(typepath)

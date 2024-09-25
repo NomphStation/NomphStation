@@ -24,6 +24,7 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/toggle_camera_light,
 	/mob/living/silicon/ai/proc/take_image,
 	/mob/living/silicon/ai/proc/view_images,
+	/mob/living/silicon/ai/proc/delete_images,
 	/mob/living/silicon/ai/proc/toggle_multicam_verb,
 	/mob/living/silicon/ai/proc/add_multicam_verb
 )
@@ -40,7 +41,7 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai
-	name = "AI"
+	name = JOB_AI
 	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
 	anchored = TRUE // -- TLE
@@ -224,7 +225,7 @@ var/list/ai_verbs_default = list(
 		show_laws()
 		to_chat(src, "<span class='filter_notice'><b>These laws may be changed by other players, or by you being the traitor.</b></span>")
 
-	job = "AI"
+	job = JOB_AI
 	setup_icon()
 
 /mob/living/silicon/ai/Destroy()
@@ -299,7 +300,7 @@ var/list/ai_verbs_default = list(
 
 	// Set ai pda name
 	if(aiPDA)
-		aiPDA.ownjob = "AI"
+		aiPDA.ownjob = JOB_AI
 		aiPDA.owner = pickedName
 		aiPDA.name = pickedName + " (" + aiPDA.ownjob + ")"
 
@@ -390,6 +391,9 @@ var/list/ai_verbs_default = list(
 		return
 
 	var/confirm = tgui_alert(usr, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
+
+	if(!confirm)
+		return
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
@@ -617,6 +621,9 @@ var/list/ai_verbs_default = list(
 
 		if("Model")
 			choice = tgui_alert(usr, "Would you like to select a hologram based on a (visible) crew member, switch to unique avatar, or load your character from your character slot?","Hologram Selection",list("Crew Member","Unique","My Character"))
+
+			if(!choice)
+				return
 
 			switch(choice)
 				if("Crew Member") //A seeable crew member (or a dog)
@@ -966,9 +973,9 @@ var/list/ai_verbs_default = list(
 	else if(iscarbon(speaker)) // Nonhuman carbon mob
 		jobname = "No id"
 	else if(isAI(speaker))
-		jobname = "AI"
+		jobname = JOB_AI
 	else if(isrobot(speaker))
-		jobname = "Cyborg"
+		jobname = JOB_CYBORG
 	else if(istype(speaker, /mob/living/silicon/pai))
 		jobname = "Personal AI"
 	else

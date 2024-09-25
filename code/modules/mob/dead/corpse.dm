@@ -32,11 +32,12 @@
 	var/list/tail_type = null
 	var/list/ear_type = null
 	var/list/wing_type = null
+	var/hair = null // CHOMPAdd
 	var/corpsesynthtype = 0			// 0 for organic, 1 for drone, 2 for posibrain
 	var/corpsesynthbrand = "Unbranded"
 	var/corpsesensormode = 0	//CHOMPAdd - For setting the suit sensors of a corpse. Default to 0 so we don't annoy medbay.
 
-/obj/effect/landmark/mobcorpse/New()
+/obj/effect/landmark/mobcorpse/Initialize() //CHOMPEdit
 	createCorpse()
 
 /obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
@@ -86,6 +87,11 @@
 						M.g_ears3 = color_rgb_list[2]
 						M.b_ears3 = color_rgb_list[3]
 			M.update_hair()
+	//CHOMPAdd Start
+	if(hair)
+		M.h_style = hair
+		M.update_hair()
+	//CHOMPAdd End
 	if(wing_type && wing_type.len)
 		if(wing_type[1] in wing_styles_list)
 			M.wing_style = wing_styles_list[wing_type[1]]
@@ -188,7 +194,7 @@
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseid = 1
 	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
+	corpseidaccess = JOB_SYNDICATE
 
 /obj/effect/landmark/mobcorpse/solarpeacekeeper
 	name = "Mercenary"
@@ -202,7 +208,7 @@
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseid = 1
 	corpseidjob = "Peacekeeper"
-	corpseidaccess = "Syndicate"
+	corpseidaccess = JOB_SYNDICATE
 
 /obj/effect/landmark/mobcorpse/syndicatecommando
 	name = "Mercenary Commando"
@@ -217,12 +223,12 @@
 	corpsepocket1 = /obj/item/weapon/tank/emergency/oxygen
 	corpseid = 1
 	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
+	corpseidaccess = JOB_SYNDICATE
 
 
 
 /obj/effect/landmark/mobcorpse/clown
-	name = "Clown"
+	name = JOB_CLOWN
 	corpseuniform = /obj/item/clothing/under/rank/clown
 	corpseshoes = /obj/item/clothing/shoes/clown_shoes
 	corpseradio = /obj/item/device/radio/headset
@@ -230,8 +236,8 @@
 	corpsepocket1 = /obj/item/weapon/bikehorn
 	corpseback = /obj/item/weapon/storage/backpack/clown
 	corpseid = 1
-	corpseidjob = "Clown"
-	corpseidaccess = "Clown"
+	corpseidjob = JOB_CLOWN
+	corpseidaccess = JOB_CLOWN
 
 
 

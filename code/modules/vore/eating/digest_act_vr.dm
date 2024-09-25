@@ -16,7 +16,7 @@
 			V.ghostize(0) //CHOMPAdd - Prevent Reenter Corpse sending observers to the shadow realm
 			V.stat = DEAD //CHOMPAdd - Helps with autosleeving
 			if(V.mind) V.mind.vore_death = 1 //CHOMPAdd - Digested item TFs get vore_death timer
-			V.Destroy() //Destroy the voice.
+			qdel(V)
 		for(var/mob/living/M in contents)//Drop mobs from objects(shoes) before deletion
 			M.forceMove(item_storage)
 		for(var/obj/item/O in contents)
@@ -81,7 +81,7 @@
 				P.id = null
 		/* CHOMPEdit Start - This is handled lower down now
 		for(var/mob/living/voice/V in possessed_voice) // Delete voices.
-			V.Destroy() //Destroy the voice.
+			qdel(V) //Destroy the voice.
 		CHOMPEdit End */
 		for(var/mob/living/M in contents)//Drop mobs from objects(shoes) before deletion
 			if(item_storage)
@@ -111,7 +111,7 @@
 			soundfile = pick('sound/vore/shortgurgles/gurgle_M1.ogg', 'sound/vore/shortgurgles/gurgle_M2.ogg', 'sound/vore/shortgurgles/gurgle_M3.ogg')
 		else
 			soundfile = pick('sound/vore/shortgurgles/gurgle_S1.ogg', 'sound/vore/shortgurgles/gurgle_S2.ogg', 'sound/vore/shortgurgles/gurgle_S3.ogg')
-		playsound(src, soundfile, vol = g_sound_volume, vary = 1, falloff = VORE_SOUND_FALLOFF, frequency = noise_freq, preference = /datum/client_preference/eating_noises, volume_channel = VOLUME_CHANNEL_VORE) //CHOMPEdit
+		playsound(src, soundfile, vol = g_sound_volume, vary = 1, falloff = VORE_SOUND_FALLOFF, frequency = noise_freq, preference = /datum/preference/toggle/eating_noises, volume_channel = VOLUME_CHANNEL_VORE) //CHOMPEdit
 		//CHOMPEdit Start - Allow those turned into items to become the recycled item
 		var/recycled = B.recycle(src)
 		if(!recycled)
@@ -119,7 +119,7 @@
 				V.ghostize(0) //CHOMPAdd - Prevent Reenter Corpse sending observers to the shadow realm
 				V.stat = DEAD //CHOMPAdd - Helps with autosleeving
 				if(V.mind) V.mind.vore_death = 1 //CHOMPAdd - Digested item TFs get vore_death timer
-				V.Destroy() //Destroy the voice.
+				qdel(V) //Destroy the voice.
 		if(istype(B) && recycled)
 		//CHOMPEdit End
 			g_damage = w_class / 2
@@ -244,7 +244,7 @@
 		if(istype(B) && B.storing_nutrition)
 			return FALSE
 		else if(isliving(B.owner))
-			B.owner.nutrition += stored_nutrition
+			B.owner.nutrition += stored_nutrition * (B.nutrition_percent / 100)
 			stored_nutrition = 0
 			qdel(src)
 			return w_class

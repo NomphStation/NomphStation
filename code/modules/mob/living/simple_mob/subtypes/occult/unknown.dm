@@ -15,7 +15,7 @@
 	icon_living = "glitch_boss"
 	icon_dead = "glitch_boss_dead"
 
-	faction = "MATH"
+	faction = FACTION_MATH
 
 	maxHealth = 2000
 	health = 2000
@@ -299,7 +299,7 @@
 	icon_state = "glitch_boss"
 	icon_living = "glitch_boss"
 	icon_dead = "glitch_boss_dead"
-	faction = "MATH"
+	faction = FACTION_MATH
 
 	maxHealth = 20
 	health = 20
@@ -350,3 +350,11 @@
 	intelligence_level = AI_SMART
 	vision_range = 9
 	closest_distance = 4
+
+#undef GA_ADS
+#undef GA_CALLDOWN
+#undef GA_SPEEDUP
+#undef GA_ILLUSION
+#undef GA_BULLETHELL
+#undef GA_LINES
+#undef GA_CONFUSION

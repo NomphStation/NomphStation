@@ -1,11 +1,3 @@
-/obj/item/device/radio/headset/casino
-	name = "radio headset"
-	desc = "An updated, modular intercom that fits over the head with extra comfortable for the hardworking casino luxury crew. Has encryption key for scamm-... Kind casino staff channel."
-	icon = 'icons/obj/casino_ch.dmi'
-	icon_state = "headset"
-	origin_tech = list(TECH_ILLEGAL = 2)
-	ks1type = /obj/item/device/encryptionkey/raider
-
 //Badmin piece of clothing that applies a few effects to a mob, used specifically for events with "hunters"
 //This just helps me equip the hunters a little easier
 /obj/item/device/radio/headset/event
@@ -100,4 +92,10 @@
 	name = "outsider radio encryption key"
 	icon_state = "sec_cypherkey"
 
-	channels = list("Outsider" = 1)
+	channels = list(CHANNEL_OUTSIDER = 1)
+
+/obj/item/device/radio/headset/headset_medsec
+	name = "medical security radio headset"
+	desc = "A headset with combined medical and security functionality."
+	icon_state = "med_headset"
+	ks2type = /obj/item/device/encryptionkey/headset_medsec

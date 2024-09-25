@@ -7,7 +7,7 @@
 	icon_living = "cryptdrake"
 	icon_state = "cryptdrake"
 	icon_rest = "cryptdrake"
-	faction = "dragon"
+	faction = FACTION_DRAGON
 	old_x = -48
 	old_y = 0
 	vis_height = 92
@@ -129,3 +129,10 @@
 	set_AI_busy(FALSE)
 	if(Adjacent(L))	//We leapt at them but we didn't manage to hit them, let's see if we're next to them
 		L.Weaken(2)	//get knocked down, idiot
+
+/mob/living/simple_mob/vore/cryptdrake/albedo //A slight variation of the cryptdrake requested for an event with glowing eyes
+	icon_dead = "cryptdrake_albedo-dead"
+	icon_living = "cryptdrake_albedo"
+	icon_state = "cryptdrake_albedo"
+	icon_rest = "cryptdrake_albedo"
+	has_eye_glow = TRUE

@@ -216,6 +216,23 @@ var/obj/screen/robot_inventory
 		client.screen += list( throw_icon, zone_sel, hands, healths, pullin, robot_inventory, gun_setting_icon)
 		client.screen += HUD.adding + HUD.other
 		client.screen += client.void
+		if(vtec_active)
+			using = new /obj/screen()
+			using.name = "control_vtec"
+			using.icon = HUD.ui_style
+			using.screen_loc = ui_vtec_control
+			using.color = HUD.ui_color
+			using.alpha = HUD.ui_alpha
+			if(speed == 0)
+				using.icon_state = "speed_0"
+			else if(speed == -0.5)
+				using.icon_state = "speed_1"
+			else if(speed == -1)
+				using.icon_state = "speed_2"
+			HUD.control_vtec = using
+			m_intent = "run"
+			HUD.move_intent.icon_state = "running"
+			client.screen += HUD.control_vtec
 
 /datum/hud/proc/toggle_vtec_control()
 	if(!isrobot(mymob))
@@ -289,11 +306,11 @@ var/obj/screen/robot_inventory
 		if(r.emagged || r.emag_items)
 			for(var/obj/O in r.module.emag)
 				if(!(O in r.module.modules))
-					r.module.modules.Add(r.module.emag)
+					r.module.modules.Add(O)
 		else
 			for(var/obj/O in r.module.emag)
 				if(O in r.module.modules)
-					r.module.modules.Remove(r.module.emag)
+					r.module.modules.Remove(O)
 
 		for(var/atom/movable/A in r.module.modules)
 			if(r.client && (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )

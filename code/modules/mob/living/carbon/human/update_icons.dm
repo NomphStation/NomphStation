@@ -62,6 +62,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 // These are used as the layers for the icons, as well as indexes in a list that holds onto them.
 // Technically the layers used are all -100+layer to make them FLOAT_LAYER overlays.
 //CHOMPEDIT: edit the file human/update_icons.dm in the modular_chomp folder as well, if you update these (and clothing/clothing.dm line 789, the hardcoded layer there in /obj/item/clothing/suit/make_worn_icon)
+/*CHOMPRemove Start: Global here!
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			1		//Mutations like fat, and lasereyes
 #define TAIL_LOWER_LAYER		2		//Tail as viewed from the south //CHOMPStation edit - underneath bodyparts
@@ -105,6 +106,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 #define TARGETED_LAYER			40		//'Aimed at' overlay layer
 #define TOTAL_LAYERS			40		//CHOMPStation edit. <---- KEEP THIS UPDATED, should always equal the highest number here, used to initialize a list.
 //////////////////////////////////
+*///CHOMPRemove End
 
 //These two are only used for gargoyles currently
 #define HUMAN_BODY_LAYERS list(MUTATIONS_LAYER, TAIL_LOWER_LAYER, WING_LOWER_LAYER, BODYPARTS_LAYER, SKIN_LAYER, BLOOD_LAYER, MOB_DAM_LAYER, TAIL_UPPER_LAYER, HAIR_LAYER, HAIR_ACCESSORY_LAYER, EYES_LAYER, WING_LAYER, VORE_BELLY_LAYER, VORE_TAIL_LAYER, TAIL_UPPER_LAYER_ALT)
@@ -172,9 +174,9 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 			M.Translate(cent_offset * desired_scale_x, (vis_height/2)*(desired_scale_y-1)) //CHOMPEdit
 		else
 			M.Scale(desired_scale_x, desired_scale_y)
-			if(isnull(resting_dir))
-				resting_dir = pick(FALSE, TRUE)
-			if(resting_dir)
+			if(isnull(rest_dir))
+				rest_dir = pick(FALSE, TRUE)
+			if(rest_dir)
 				M.Translate((1 / desired_scale_x * -4) + (desired_scale_x * cent_offset), 0)
 				M.Turn(-90)
 			else
@@ -1112,7 +1114,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 		apply_layer(tail_layer)
 		return
 
-	var/species_tail = species.get_tail(src) // Species tail icon_state prefix.
+	var/species_tail = species?.get_tail(src) // Species tail icon_state prefix.
 
 	//This one is actually not that bad I guess.
 	if(species_tail && !(wear_suit && wear_suit.flags_inv & HIDETAIL))
@@ -1395,7 +1397,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 		if(tail_style.extra_overlay)
 			var/icon/overlay = new/icon("icon" = (tail_style?.can_loaf && resting) ? tail_style.icon_loaf : tail_style.icon, "icon_state" = tail_style.extra_overlay) //CHOMPEdit
 			if(wagging && tail_style.ani_state)
-				overlay = new/icon("icon" = tail_style.icon, "icon_state" = tail_style.extra_overlay_w)
+				overlay = new/icon("icon" = (tail_style?.can_loaf && resting) ? tail_style.icon_loaf : tail_style.icon, "icon_state" = tail_style.extra_overlay_w)	//RS EDIT
 				overlay.Blend(rgb(src.r_tail2, src.g_tail2, src.b_tail2), tail_style.color_blend_mode)
 				tail_s.Blend(overlay, ICON_OVERLAY)
 				qdel(overlay)
@@ -1407,7 +1409,7 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 		if(tail_style.extra_overlay2)
 			var/icon/overlay = new/icon("icon" = (tail_style?.can_loaf && resting) ? tail_style.icon_loaf : tail_style.icon, "icon_state" = tail_style.extra_overlay2) //CHOMPEdit
 			if(wagging && tail_style.ani_state)
-				overlay = new/icon("icon" = tail_style.icon, "icon_state" = tail_style.extra_overlay2_w)
+				overlay = new/icon("icon" = (tail_style?.can_loaf && resting) ? tail_style.icon_loaf : tail_style.icon, "icon_state" = tail_style.extra_overlay2_w)	//RS EDIT
 				overlay.Blend(rgb(src.r_tail3, src.g_tail3, src.b_tail3), tail_style.color_blend_mode)
 				tail_s.Blend(overlay, ICON_OVERLAY)
 				qdel(overlay)
@@ -1445,39 +1447,115 @@ GLOBAL_LIST_EMPTY(damage_icon_parts) //see UpdateDamageIcon()
 	if((. = ..()))
 		update_wing_showing()
 
+/mob/living/carbon/human/proc/update_vore_belly_sprite()
+	if(QDESTROYING(src))
+		return
+
+	remove_layer(VORE_BELLY_LAYER)
+
+	var/image/vore_belly_image = get_vore_belly_image()
+	if(vore_belly_image)
+		vore_belly_image.layer = BODY_LAYER+VORE_BELLY_LAYER
+		overlays_standing[VORE_BELLY_LAYER] = vore_belly_image
+		//CHOMPEdit Disabling this until someone comes up with a less destructive approach. //vore_belly_image.plane = PLANE_CH_STOMACH //This one line of code. This ONE LINE OF CODE TOOK 6 HOURS TO FIGURE OUT. THANK YOU REDCAT.
+		vore_belly_image.appearance_flags = appearance_flags
+
+	apply_layer(VORE_BELLY_LAYER)
+
+/mob/living/carbon/human/proc/get_vore_belly_image()
+	if(!(wear_suit && wear_suit.flags_inv & HIDETAIL))
+		var/vs_fullness = vore_fullness_ex["stomach"]
+		var/icon/vorebelly_s = new/icon(icon = 'modular_chomp/icons/mob/vore/Bellies.dmi', icon_state = "[species.vore_belly_default_variant]Belly[vs_fullness][struggle_anim_stomach ? "" : " idle"]") //CHOMPEdit
+		vorebelly_s.Blend(vore_sprite_color["stomach"], vore_sprite_multiply["stomach"] ? ICON_MULTIPLY : ICON_ADD)
+		var/image/working = image(vorebelly_s)
+		working.overlays += em_block_image_generic(working)
+		return working
+	return null
+
+/mob/living/carbon/human/proc/vore_belly_animation()
+	if(!struggle_anim_stomach)
+		struggle_anim_stomach = TRUE
+		update_vore_belly_sprite()
+		spawn(12)
+			struggle_anim_stomach = FALSE
+			update_vore_belly_sprite()
+
+/mob/living/carbon/human/proc/update_vore_tail_sprite()
+	if(QDESTROYING(src))
+		return
+
+	remove_layer(VORE_TAIL_LAYER)
+
+	var/image/vore_tail_image = get_vore_tail_image()
+	if(vore_tail_image)
+		vore_tail_image.layer = BODY_LAYER+VORE_TAIL_LAYER
+		overlays_standing[VORE_TAIL_LAYER] = vore_tail_image
+		//CHOMPEdit Disabling this until someone comes up with a less destructive approach. //vore_tail_image.plane = PLANE_CH_STOMACH //This one line of code. This ONE LINE OF CODE TOOK 6 HOURS TO FIGURE OUT. THANK YOU REDCAT.
+		vore_tail_image.appearance_flags = appearance_flags
+
+	apply_layer(VORE_TAIL_LAYER)
+
+/mob/living/carbon/human/proc/get_vore_tail_image()
+	if(tail_style && istaurtail(tail_style) && tail_style:vore_tail_sprite_variant)
+		var/vs_fullness = vore_fullness_ex["taur belly"]
+		var/loaf_alt = lying && tail_style:belly_variant_when_loaf
+		var/fullness_icons = min(tail_style.fullness_icons, vs_fullness)
+		var/icon/vorebelly_s = new/icon(icon = tail_style.bellies_icon_path, icon_state = "Taur[tail_style:vore_tail_sprite_variant]-Belly-[fullness_icons][loaf_alt ? " loaf" : (struggle_anim_taur ? "" : " idle")]")
+		vorebelly_s.Blend(vore_sprite_color["taur belly"], vore_sprite_multiply["taur belly"] ? ICON_MULTIPLY : ICON_ADD)
+		var/image/working = image(vorebelly_s)
+		working.pixel_x = -16
+		if(tail_style.em_block)
+			working.overlays += em_block_image_generic(working)
+		return working
+	return null
+
+/mob/living/carbon/human/proc/vore_tail_animation()
+	if(tail_style.struggle_anim && !struggle_anim_taur)
+		struggle_anim_taur = TRUE
+		update_vore_tail_sprite()
+		spawn(12)
+			struggle_anim_taur = FALSE
+			update_vore_tail_sprite()
+
 //Human Overlays Indexes/////////
 /* CHOMPEdit - why are these undefined??
-#undef MUTATIONS_LAYER
-#undef SKIN_LAYER
-#undef MOB_DAM_LAYER
-#undef SURGERY_LAYER
-#undef UNDERWEAR_LAYER
-#undef SHOES_LAYER_ALT
-#undef UNIFORM_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef BELT_LAYER
-#undef SUIT_LAYER
-#undef TAIL_UPPER_LAYER
-#undef TAIL_LOWER_LAYER
-#undef GLASSES_LAYER
-#undef BELT_LAYER_ALT
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef EARS_LAYER
-#undef EYES_LAYER
-#undef FACEMASK_LAYER
-#undef HEAD_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef VORE_BELLY_LAYER
-#undef MODIFIER_EFFECTS_LAYER
-#undef FIRE_LAYER
-#undef WATER_LAYER
-#undef TARGETED_LAYER
-#undef TOTAL_LAYERS
+# undef MUTATIONS_LAYER
+# undef SKIN_LAYER
+# undef BLOOD_LAYER
+# undef MOB_DAM_LAYER
+# undef SURGERY_LAYER
+# undef UNDERWEAR_LAYER
+# undef SHOES_LAYER_ALT
+# undef UNIFORM_LAYER
+# undef ID_LAYER
+# undef SHOES_LAYER
+# undef GLOVES_LAYER
+# undef BELT_LAYER
+# undef SUIT_LAYER
+# undef TAIL_UPPER_LAYER
+# undef TAIL_LOWER_LAYER
+# undef WING_LOWER_LAYER
+# undef GLASSES_LAYER
+# undef BELT_LAYER_ALT
+# undef SUIT_STORE_LAYER
+# undef BACK_LAYER
+# undef HAIR_LAYER
+# undef HAIR_ACCESSORY_LAYER
+# undef EARS_LAYER
+# undef EYES_LAYER
+# undef FACEMASK_LAYER
+# undef GLASSES_LAYER_ALT
+# undef HEAD_LAYER
+# undef HANDCUFF_LAYER
+# undef LEGCUFF_LAYER
+# undef L_HAND_LAYER
+# undef R_HAND_LAYER
+# undef VORE_BELLY_LAYER
+# undef WING_LAYER
+# undef TAIL_UPPER_LAYER_ALT
+# undef MODIFIER_EFFECTS_LAYER
+# undef FIRE_LAYER
+# undef WATER_LAYER
+# undef TARGETED_LAYER
+# undef TOTAL_LAYERS
 */

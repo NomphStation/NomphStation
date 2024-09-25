@@ -2,8 +2,6 @@
 // * n — The proper name of the purchasable
 // * o — The object type path of the purchasable to spawn
 // * p — The price of the purchasable in mining points
-#define EQUIPMENT(n, o, p) n = new /datum/data/mining_equipment(n, o, p)
-
 /**********************Mining Equipment Locker**************************/
 
 /obj/machinery/mineral/equipment_vendor
@@ -270,7 +268,7 @@
 	if(istype(I,/obj/item/weapon/card/id))
 		if(!powered())
 			return
-		else if(!inserted_id && user.unEquip(I))
+		else if(!inserted_id && (user.unEquip(I) || isrobot(user)))
 			I.forceMove(src)
 			inserted_id = I
 			tgui_interact(user)
