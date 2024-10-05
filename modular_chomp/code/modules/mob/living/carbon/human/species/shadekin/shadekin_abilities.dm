@@ -211,6 +211,8 @@
 		canmove = FALSE
 
 		//CHOMPAdd Start
+		//HomphEdit start
+		/*
 		var/list/allowed_implants = list(
 			/obj/item/implant/sizecontrol,
 			/obj/item/implant/compliance,
@@ -225,6 +227,7 @@
 				organ.implants -= O
 		if(!has_embedded_objects())
 			clear_alert("embeddedobject")
+		*/ //Homphedit End
 		//CHOMPAdd End
 
 		// change
