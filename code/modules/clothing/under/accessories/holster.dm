@@ -54,11 +54,14 @@
 			if(C.handcuffed)
 				to_chat(C, "<span class='warning'>You cannot draw \the [holstered] while handcuffed!</span>")
 				return
+		//HomphEdit begin
+		/*
 			else if(istype(C, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = C
 				if(H.ability_flags & 0x1)
 					to_chat(H, "<span class='warning'>You cannot draw \the [holstered] while phase shifted!</span>")
 					return
+		*/ //HomphEdit end
 		//CHOMPEdit end
 		var/sound_vol = 25
 		if(user.a_intent == I_HURT)

@@ -132,11 +132,14 @@
 		if(C.handcuffed)
 			to_chat(C, "<span class='warning'>You cannot remove accessories while handcuffed!</span>")
 			return
+	//HomphEdit begin
+	/*
 		else if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if(H.ability_flags & 0x1)
 				to_chat(H, "<span class='warning'>You cannot remove accessories while phase shifted!</span>")
 				return
+	*/ //HomphEdit end
 	//CHOMPEdit end
 
 	var/obj/item/clothing/accessory/A

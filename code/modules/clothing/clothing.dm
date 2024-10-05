@@ -637,11 +637,15 @@
 		return
 
 	//CHOMPEdit begin
+	//HomphEdit begin
+	/*
 	if(istype(usr, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = usr
 		if(H.ability_flags & 0x1)
 			to_chat(usr, "<span class='warning'>You cannot do that while phase shifted.</span>")
 			return
+
+	*/ //HomphEdit end
 	//CHOMPEdit end
 
 	holding.forceMove(get_turf(usr))
