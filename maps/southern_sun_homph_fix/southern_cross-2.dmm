@@ -23906,7 +23906,9 @@
 /turf/simulated/wall/r_wall,
 /area/SouthernCrossV2/Cargo/Waste_Disposals)
 "bvx" = (
-/obj/machinery/v_garbosystem,
+/obj/machinery/v_garbosystem{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/SouthernCrossV2/Cargo/Recycling)
 "bvy" = (
@@ -33356,7 +33358,9 @@
 /turf/simulated/floor/tiled/dark,
 /area/SouthernCrossV2/Bridge/Vault)
 "cdz" = (
-/obj/machinery/recycling/stamper,
+/obj/machinery/recycling/stamper{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/SouthernCrossV2/Cargo/Recycling)
 "cdA" = (
@@ -94083,7 +94087,8 @@
 /area/SouthernCrossV2/Maints/ab_TeshDen)
 "qmn" = (
 /obj/machinery/recycling/crusher{
-	color = "#BDBCA9"
+	color = "#BDBCA9";
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/SouthernCrossV2/Cargo/Recycling)
@@ -120847,7 +120852,8 @@
 /area/SouthernCrossV2/Security/Locker_Room)
 "xAQ" = (
 /obj/machinery/recycling/sorter{
-	color = "#BDBCA9"
+	color = "#BDBCA9";
+	dir = 8
 	},
 /obj/machinery/camera/network/security{
 	dir = 1;
