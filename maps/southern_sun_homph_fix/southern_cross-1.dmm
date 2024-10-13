@@ -49177,7 +49177,7 @@
 	id = "echidna_hatch";
 	name = "Rear Hatch Control";
 	pixel_x = 26;
-	req_access = list(67);
+	req_access = list(54);
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/yellow{
