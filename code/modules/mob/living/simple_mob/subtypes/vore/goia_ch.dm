@@ -7,7 +7,7 @@
 	icon_living = null
 	icon_rest = null
 	icon_dead = "zorgoia-death"
-	faction = "zorgoia"
+	faction = FACTION_ZORGOIA
 	maxHealth = 150 //chonk
 	health = 150
 	melee_damage_lower = 5
@@ -413,7 +413,7 @@
 				if(M.zone_sel.selecting == BP_GROIN)
 					if(M.vore_bellyrub(src))
 						return
-				M.visible_message("<span class='notice'>[M] [response_help] \the [src].</span>")
+				M.visible_message(span_notice("[M] [response_help] \the [src]."))
 				if(has_AI())
 					var/datum/ai_holder/AI = ai_holder
 					AI.set_stance(STANCE_IDLE)
@@ -490,7 +490,7 @@
 		goia_overlays["spike"],
 		goia_overlays["zorgoia_belly"],
 		goia_overlays["belly"]), ";")
-	to_chat(src, "<span class='notice'>Exported style string is \" [output_style] \". Use this to get the same style in the future with import style</span>")
+	to_chat(src, span_notice("Exported style string is \" [output_style] \". Use this to get the same style in the future with import style"))
 
 /mob/living/simple_mob/vore/zorgoia/proc/import_style()
 	set name = "Import style string"

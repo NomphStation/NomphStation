@@ -9,6 +9,8 @@
 	w_class = ITEMSIZE_SMALL
 	matter = list(MAT_STEEL = 200)
 	origin_tech = list(TECH_MAGNET = 2, TECH_BIO = 2, TECH_ILLEGAL = 1)
+	pickup_sound = 'sound/items/pickup/device.ogg'
+	drop_sound = 'sound/items/drop/device.ogg'
 
 /obj/item/bodysnatcher/New()
 	..()
@@ -90,6 +92,14 @@
 					user.ooc_notes_favs = target_favs
 					user.ooc_notes_maybes = target_maybes
 					user.ooc_notes_style = target_style
+					if(M.tf_mob_holder == user)
+						M.tf_mob_holder = null
+					else
+						M.tf_mob_holder = user
+					if(user.tf_mob_holder == M)
+						user.tf_mob_holder = null
+					else
+						user.tf_mob_holder = M
 					//CHOMPEdit End
 					user.ooc_notes = target_ooc_notes
 					user.ooc_notes_likes = target_likes

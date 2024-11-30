@@ -174,8 +174,9 @@
 	return
 
 /obj/machinery/partslathe/proc/removeFromQueue(var/index)
-	queue.Cut(index, index + 1)
-	return
+	if(queue.len >= index)
+		queue.Cut(index, index + 1)
+		return
 
 /obj/machinery/partslathe/proc/canBuild(var/datum/category_item/partslathe/D)
 	for(var/M in D.resources)
@@ -336,7 +337,7 @@
 	switch(action)
 		if("ejectBoard")
 			if(copy_board)
-				visible_message("<span class='notice'>[copy_board] is ejected from [src]'s circuit reader</span>.")
+				visible_message(span_notice("[copy_board] is ejected from [src]'s circuit reader."))
 				copy_board.forceMove(src.loc)
 				copy_board = null
 			return TRUE

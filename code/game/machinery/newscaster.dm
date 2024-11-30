@@ -266,8 +266,8 @@ GLOBAL_LIST_BOILERPLATE(allCasters, /obj/machinery/newscaster)
 		node = get_exonet_node()
 
 	if(!node || !node.on || !node.allow_external_newscasters)
-		to_chat(user, "<span class='danger'>Error: Cannot connect to external content.  Please try again in a few minutes.  If this error persists, please \
-		contact the system administrator.</span>")
+		to_chat(user, span_danger("Error: Cannot connect to external content.  Please try again in a few minutes.  If this error persists, please \
+		contact the system administrator."))
 		return 0
 
 	if(!user.IsAdvancedToolUser())
@@ -365,6 +365,7 @@ GLOBAL_LIST_BOILERPLATE(allCasters, /obj/machinery/newscaster)
 		if(!viewing_channel.censored)
 			for(var/datum/feed_message/M in viewing_channel.messages)
 				var/list/msgdata = list(
+					"title" = M.title,
 					"body" = M.body,
 					"img" = null,
 					"type" = M.message_type,

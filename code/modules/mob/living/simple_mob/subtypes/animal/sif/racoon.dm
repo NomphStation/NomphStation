@@ -78,7 +78,7 @@
 /mob/living/simple_mob/animal/sif/sakimm/verb/remove_hat()
 	set name = "Remove Hat"
 	set desc = "Remove the animal's hat. You monster."
-	set category = "Abilities.Sakimm" //CHOMPEdit
+	set category = "Abilities.Sakimm"
 	set src in view(1)
 
 	drop_hat(usr)
@@ -101,7 +101,7 @@
 /mob/living/simple_mob/animal/sif/sakimm/verb/give_hat()
 	set name = "Give Hat"
 	set desc = "Give the animal a hat. You hero."
-	set category = "Abilities.Sakimm" //CHOMPEdit
+	set category = "Abilities.Sakimm"
 	set src in view(1)
 
 	take_hat(usr)
@@ -159,8 +159,8 @@
 /mob/living/simple_mob/animal/sif/sakimm/Initialize()
 	. = ..()
 
-	add_verb(src,/mob/living/proc/ventcrawl) //CHOMPEdit TGPanel
-	add_verb(src,/mob/living/proc/hide) //CHOMPEdit TGPanel
+	add_verb(src, /mob/living/proc/ventcrawl)
+	add_verb(src, /mob/living/proc/hide)
 
 	if(randomize_size)
 		adjust_scale(rand(8, 11) / 10)
@@ -188,7 +188,7 @@
 	if(holder.get_active_hand() && istype(holder.get_active_hand(), /obj/item/clothing/head) && !S.hat)
 		var/obj/item/I = holder.get_active_hand()
 		S.take_hat(S)
-		holder.visible_message("<b>\The [holder]</b> wears \the [I]")
+		holder.visible_message(span_infoplain(span_bold("\The [holder]") + " wears \the [I]"))
 
 /mob/living/simple_mob/animal/sif/sakimm/intelligent
 	desc = "What appears to be an oversized rodent with hands. This one has a curious look in its eyes."
@@ -334,7 +334,7 @@
 		if(istype(holder) && istype(holder.get_active_hand(), /obj/item/clothing/head) && !S.hat)
 			var/obj/item/I = holder.get_active_hand()
 			S.take_hat(S)
-			holder.visible_message("<b>\The [holder]</b> wears \the [I]")
+			holder.visible_message(span_bold("\The [holder]") + "wears \the [I]")
 		carrying_item = TRUE
 
 	if(istype(holder) && S.hat)		// Do we have a hat? Hats are loot.

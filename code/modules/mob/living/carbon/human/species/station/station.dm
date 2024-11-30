@@ -267,6 +267,8 @@
 	reagent_tag = IS_TAJARA
 	allergens = ALLERGEN_STIMULANT
 
+	climb_mult = 0.75
+
 	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 
 	heat_discomfort_level = 292
@@ -669,8 +671,8 @@
 			qdel(Org)
 
 		// Purge the diona verbs.
-		remove_verb(H,/mob/living/carbon/human/proc/diona_split_nymph)  //CHOMPEdit
-		remove_verb(H,/mob/living/carbon/human/proc/regenerate)  //CHOMPEdit
+		remove_verb(H, /mob/living/carbon/human/proc/diona_split_nymph)
+		remove_verb(H, /mob/living/carbon/human/proc/regenerate)
 
 		return
 

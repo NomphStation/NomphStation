@@ -23,7 +23,7 @@ var/datum/antagonist/ninja/ninjas
 	ninjas = src
 
 /datum/antagonist/ninja/attempt_random_spawn()
-	if(CONFIG_GET(flag/ninjas_allowed)) ..() // CHOMPEdit
+	if(CONFIG_GET(flag/ninjas_allowed)) ..()
 
 /datum/antagonist/ninja/create_objectives(var/datum/mind/ninja)
 
@@ -85,8 +85,8 @@ var/datum/antagonist/ninja/ninjas
 	if(!..())
 		return 0
 	var/directive = generate_ninja_directive("heel")
-	player.store_memory("<B>Directive:</B> <span class='danger'>[directive]</span><br>")
-	to_chat(player, "<b>Remember your directive:</b> [directive].")
+	player.store_memory(span_bold("Directive:") + " " + span_danger("[directive]") + "<br>")
+	to_chat(player, span_bold("Remember your directive:") + " [directive].")
 
 /datum/antagonist/ninja/update_antag_mob(var/datum/mind/player)
 	..()
